@@ -1,0 +1,11 @@
+q#_avg_rlength : Average Ride Length of Q#
+divvy_avg_rlength : Average Ride Length of all quarters and user type
+
+wcasual_avg_rlength : Casual's Average Ride Length of all quarters in Days
+wmember_avg_rlength : Member's Average Ride Length of all quarters in Days
+
+rcounts_casual : Casual's Ride Counts of all quarters in Days
+rcounts_member : Member's Ride Counts of all quarters in Days
+
+qs_sname : Top 6 of Start Station Name
+qs_ename : Top 6 of End Station Name

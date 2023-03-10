@@ -143,7 +143,10 @@ most_q2_sname <- divvy_q2 %>% count(from_station_name, sort = TRUE)
 most_q3_sname <- divvy_q3 %>% count(from_station_name, sort = TRUE)
 most_q4_sname <- divvy_q4 %>% count(from_station_name, sort = TRUE)
 
-rbind(most_q1_sname, most_q2_sname, most_q3_sname, most_q4_sname)
+qs_sname <- rbind(most_q1_sname[1:3,], most_q2_sname[1:3,], most_q3_sname[1:3,], most_q4_sname[1:3,]) %>% 
+  group_by(from_station_name) %>% 
+  summarise(total = sum(n)) %>% 
+  arrange(desc(total))
 
 # ------------------------------------------------------------------------------
 
@@ -152,4 +155,7 @@ most_q2_ename <- divvy_q2 %>% count(to_station_name, sort = TRUE)
 most_q3_ename <- divvy_q3 %>% count(to_station_name, sort = TRUE)
 most_q4_ename <- divvy_q4 %>% count(to_station_name, sort = TRUE)
 
-rbind(most_q1_ename, most_q2_ename, most_q3_ename, most_q4_ename)
+qs_ename <- rbind(most_q1_ename[1:3,], most_q2_ename[1:3,], most_q3_ename[1:3,], most_q4_ename[1:3,]) %>% 
+  group_by(to_station_name) %>% 
+  summarise(total = sum(n)) %>% 
+  arrange(desc(total))
