@@ -39,6 +39,10 @@ divvy_q2 <- filter(divvy_q2, divvy_q2$ride_length >= 1, divvy_q2$ride_length < 1
 divvy_q3 <- filter(divvy_q3, divvy_q3$ride_length >= 1, divvy_q3$ride_length < 1440)
 divvy_q4 <- filter(divvy_q4, divvy_q4$ride_length >= 1, divvy_q4$ride_length < 1440)
 
+divvy_q1['ride_length'] <- as.numeric(unlist(divvy_q1['ride_length']))
+divvy_q2['ride_length'] <- as.numeric(unlist(divvy_q2['ride_length']))
+divvy_q3['ride_length'] <- as.numeric(unlist(divvy_q3['ride_length']))
+divvy_q4['ride_length'] <- as.numeric(unlist(divvy_q4['ride_length']))
 
 replace_usertype_name <- c("Subscriber" = "Member", "Customer" = "Casual")
 
