@@ -1,0 +1,1 @@
+ggplot(w1_avg_rlength, aes(day_of_week, avg_ride, col=usertype)) + geom_point()
