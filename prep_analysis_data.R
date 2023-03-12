@@ -19,17 +19,12 @@ q4_avg_rlength <- divvy_q4 %>%
   group_by(usertype) %>% 
   summarise(avg_ride = mean(ride_length))
 
-quarter_num <- c("Q1", "Q2", "Q3", "Q4")
-casual_avg_rlength <- c(q1_avg_rlength[[2]][1], q2_avg_rlength[[2]][1], 
-                q3_avg_rlength[[2]][1], q4_avg_rlength[[2]][1])
-member_avg_rlength <- c(q1_avg_rlength[[2]][2], q2_avg_rlength[[2]][2], 
-                q3_avg_rlength[[2]][2], q4_avg_rlength[[2]][2])
+q1_avg_rlength$quarter <- 1
+q2_avg_rlength$quarter <- 2
+q3_avg_rlength$quarter <- 3
+q4_avg_rlength$quarter <- 4
 
-divvy_avg_rlength <- data_frame(
-  quarters = quarter_num, 
-  casual = casual_avg_rlength, 
-  member = member_avg_rlength
-)
+divvy_avg_rlength <- rbind(q1_avg_rlength, q2_avg_rlength, q3_avg_rlength, q4_avg_rlength)
 
 # ------------------------------------------------------------------------------
 
@@ -53,39 +48,27 @@ w4_avg_rlength <- divvy_q4 %>%
   group_by(usertype, day_of_week) %>% 
   summarise(avg_ride = mean(ride_length))
 
-wcasual_avg_rlength <- data.frame(
-  quarter = quarters, 
-  sun = rep(NA, 4), 
-  mon = rep(NA, 4), 
-  tue = rep(NA, 4), 
-  wed = rep(NA, 4), 
-  thu = rep(NA, 4), 
-  fri = rep(NA, 4), 
-  sat = rep(NA, 4)
+w1_avg_rlength$quarter <- "Q1"
+w2_avg_rlength$quarter <- "Q2"
+w3_avg_rlength$quarter <- "Q3"
+w4_avg_rlength$quarter <- "Q4"
+
+wcasual_avg_rlength <- rbind(
+  w1_avg_rlength[1:7,],
+  w2_avg_rlength[1:7,],
+  w3_avg_rlength[1:7,],
+  w4_avg_rlength[1:7,]
 )
 
-wmember_avg_rlength <- data.frame(
-  quarter = quarters, 
-  sun = rep(NA, 4), 
-  mon = rep(NA, 4), 
-  tue = rep(NA, 4), 
-  wed = rep(NA, 4), 
-  thu = rep(NA, 4), 
-  fri = rep(NA, 4), 
-  sat = rep(NA, 4)
+wmember_avg_rlength <- rbind(
+  w1_avg_rlength[8:14,],
+  w2_avg_rlength[8:14,],
+  w3_avg_rlength[8:14,],
+  w4_avg_rlength[8:14,]
 )
 
-for (i in 1:7) {
-  wcasual_avg_rlength[1,i+1] <- w1_avg_rlength[[3]][i]
-  wcasual_avg_rlength[2,i+1] <- w2_avg_rlength[[3]][i]
-  wcasual_avg_rlength[3,i+1] <- w3_avg_rlength[[3]][i]
-  wcasual_avg_rlength[4,i+1] <- w4_avg_rlength[[3]][i]
-  
-  wmember_avg_rlength[1,i+1] <- w1_avg_rlength[[3]][i+7]
-  wmember_avg_rlength[2,i+1] <- w2_avg_rlength[[3]][i+7]
-  wmember_avg_rlength[3,i+1] <- w3_avg_rlength[[3]][i+7]
-  wmember_avg_rlength[4,i+1] <- w4_avg_rlength[[3]][i+7]
-}
+wcasual_avg_rlength$day_of_week <- as.character(wcasual_avg_rlength$day_of_week)
+wmember_avg_rlength$day_of_week <- as.character(wmember_avg_rlength$day_of_week)
 
 # ------------------------------------------------------------------------------
 
@@ -101,40 +84,27 @@ rcounts_q3 <- divvy_q3 %>%
 rcounts_q4 <- divvy_q4 %>% 
   count(usertype, day_of_week)
 
+rcounts_q1$quarter <- "Q1"
+rcounts_q2$quarter <- "Q2"
+rcounts_q3$quarter <- "Q3"
+rcounts_q4$quarter <- "Q4"
 
-rcounts_casual <- data.frame(
-  quarter = quarters, 
-  sun = rep(NA, 4), 
-  mon = rep(NA, 4), 
-  tue = rep(NA, 4), 
-  wed = rep(NA, 4), 
-  thu = rep(NA, 4), 
-  fri = rep(NA, 4), 
-  sat = rep(NA, 4)
+rcounts_casual <- rbind(
+  rcounts_q1[1:7,],
+  rcounts_q2[1:7,],
+  rcounts_q3[1:7,],
+  rcounts_q4[1:7,]
 )
 
-rcounts_member <- data.frame(
-  quarter = quarters, 
-  sun = rep(NA, 4), 
-  mon = rep(NA, 4), 
-  tue = rep(NA, 4), 
-  wed = rep(NA, 4), 
-  thu = rep(NA, 4), 
-  fri = rep(NA, 4), 
-  sat = rep(NA, 4)
+rcounts_member <- rbind(
+  rcounts_q1[8:14,],
+  rcounts_q2[8:14,],
+  rcounts_q3[8:14,],
+  rcounts_q4[8:14,]
 )
 
-for (i in 1:7) {
-  rcounts_casual[1,i+1] <- rcounts_q1[[3]][i]
-  rcounts_casual[2,i+1] <- rcounts_q2[[3]][i]
-  rcounts_casual[3,i+1] <- rcounts_q3[[3]][i]
-  rcounts_casual[4,i+1] <- rcounts_q4[[3]][i]
-  
-  rcounts_member[1,i+1] <- rcounts_q1[[3]][i+7]
-  rcounts_member[2,i+1] <- rcounts_q2[[3]][i+7]
-  rcounts_member[3,i+1] <- rcounts_q3[[3]][i+7]
-  rcounts_member[4,i+1] <- rcounts_q4[[3]][i+7]
-}
+rcounts_casual$day_of_week <- as.character(rcounts_casual$day_of_week)
+rcounts_member$day_of_week <- as.character(rcounts_member$day_of_week)
 
 # ------------------------------------------------------------------------------
 
