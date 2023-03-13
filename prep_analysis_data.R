@@ -103,6 +103,9 @@ rcounts_member <- rbind(
   rcounts_q4[8:14,]
 )
 
+colnames(rcounts_casual)[3] <- "ride_counts"
+colnames(rcounts_member)[3] <- "ride_counts"
+
 rcounts_casual$day_of_week <- as.character(rcounts_casual$day_of_week)
 rcounts_member$day_of_week <- as.character(rcounts_member$day_of_week)
 

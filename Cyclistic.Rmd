@@ -1,0 +1,140 @@
+---
+title: "Cyclistic Bike-share Company"
+author: "R.Ellazar"
+date: "2023-02-23"
+output: html_document
+---
+
+## Case Study Roadmap - Ask
+
+### Guiding questions
+
+-   What is the problem you are trying to solve?
+
+    -   To determine how do annual members and casual members use cyclistic bikes differ.
+
+-   How can your insights drive business decisions?
+
+    -   Insights will help the team to design a new marketing strategy to convert casual members into annual members.
+
+### Key tasks
+
+1.  Identify the business tasks
+2.  Consider key stakeholders
+
+### Deliverable
+
+-   A clear statement of the business tasks
+
+------------------------------------------------------------------------
+
+## Case Study Roadmap - Prepare
+
+### Guiding questions
+
+-   Where is your data located?
+
+    -   The data has been made publicly available by Motivate International Inc. under this [license.](https://ride.divvybikes.com/data-license-agreement)
+
+-   How is the data organized?
+
+    -   The data is structurally organized in a csv format.
+
+-   Are there issues with bias or credibility in this data? Does your data ROCCC?
+
+    -   Dataset contains the logs of each customer from January 1, 2019 to December 31, 2019 so, in that case the data are completely random and reflects the overall population. It also provides all of the information needed for the analysis and cited under this [license.](https://ride.divvybikes.com/data-license-agreement) by Motivate International Inc.
+
+-   How are you addressing licensing, privacy, security, and accessibility?
+
+    -   **Licensing:** As a part of our data analysis process, we are prioritizing the use of open-source and tools to ensure that we are legally allowed to use and distribute the software without restrictions.
+    -   **Privacy:** Any data that could identify individuals are anonymized as a part of our data analysis process. Even the data is publicly available, we still comply with data protection regulation.
+    -   **Security:** The data are stored inside the external hard-drive. It is encrypted and password protected to ensure the safety of the data. Only authorized personnel have access to the data.
+    -   **Accessibility:** The data analysis results are accessible to people with disabilities, such as providing alternative text for images, audio descriptions for videos, and captions for audio content.
+
+-   How did you verify data's integrity? How does it help you answer your question?
+
+    -   In order to verify the integrity of the data, I followed a multi-step process. First, I examined the source of the data to ensure that it has ROCCC. Then, I checked for missing data by reviewing the dataset and determining which data points were incomplete.
+
+        Next, I looked for outliers in the data that may indicate data entry errors or data collection problems. I identified these outliers and determined whether they should be excluded from the analysis or whether they represent real data points. I also cross-checked the data with other sources of information to verify its accuracy.
+
+        Finally, I documented my findings in detail, including any assumptions I made and any limitations of the data. By following this process, I was able to ensure the integrity of the data and provide reliable insights and recommendations based on the analysis.
+
+-   Are there any problems with the data?
+
+    -   Based on [Divvy Data website](divvybikes.com/systemdata), trips that were below 60 seconds in length (potentially false starts or users trying to re-dock a bike to ensure it was secure) has been removed by staff, but in the data of this analysis there are trips below 60 seconds.
+
+        Although, there are still some data points that are way above the limited time (24-hour period). In this analysis, the data has been filtered out with the elapsed time between 60 seconds to 24 hours for the year of 2019.
+
+### Key tasks
+
+1.  Download and store it appropriately.
+2.  Identify how it's organized.
+3.  Sort and filter the data.
+4.  Determine the credibility of that data.
+
+### Deliverable
+
+-   A description of all data sources used
+
+------------------------------------------------------------------------
+
+## Case Study Roadmap - Process
+
+### Guiding questions
+
+-   What tools are you choosing and why?
+
+    -   I have chosen to use Excel and R Markdown as my tools for several reasons. Excel is a widely-used tool for data analysis, and it has a variety of features that make it easy to organize, clean, and analyze data. R Markdown is a powerful tool for generating reproducible reports that can be shared with others.
+
+-   Have you ensured your data's integrity?
+
+    -   To ensure the integrity of the data, I have taken the following steps:
+
+        -   Checked the source of the data to ensure it is reliable and accurate.
+        -   Conducted data profiling to identify any missing or erroneous data, outliers, or inconsistencies.
+        -   Implemented appropriate data security measures to prevent unauthorized access and ensure data privacy.
+
+-   What steps have you taken to ensure that your data is clean?
+
+    -   To ensure that the data is clean, I have performed the following steps:
+
+        -   Removed any duplicates from the dataset.
+        -   Standardized the data, such as converting dates to a consistent format or converting categorical data to numerical values.
+        -   Removed outliers that could distort the analysis results.
+
+-   How can you verify that your data is clean and ready to analyze?
+
+    -   To verify that the data is clean and ready for analysis, I have conducted the following checks:
+
+        -   Checked for missing values, outliers, and inconsistencies in the data.
+
+-   Have you documented your cleaning process so you can review and share those results?
+
+    -   I have documented my cleaning process, so I can review and share the results. The documentation includes a data cleaning steps. This documentation provides a clear record of the data processing steps and can be used to reproduce the results if necessary.
+
+------------------------------------------------------------------------
+
+### Key tasks
+
+1.  Check the data for errors.
+2.  Choose your tools.
+3.  Transform the data so you can work with it effectively.
+4.  Document the cleaning process.
+
+### Deliverable
+
+-   Documentation of any cleaning or manipulation of data
+
+------------------------------------------------------------------------
+
+## Case Study Roadmap - Analyze
+
+### Guiding questions
+
+-   How should you organize your data to perform analysis on it?
+
+-   Has your data been properly formatted?
+
+-   What surprises did you discover in the data?
+
+-   How will these insights help answer your business questions?
