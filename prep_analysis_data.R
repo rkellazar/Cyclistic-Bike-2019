@@ -132,3 +132,7 @@ qs_ename <- rbind(most_q1_ename[1:3,], most_q2_ename[1:3,], most_q3_ename[1:3,],
   group_by(to_station_name) %>% 
   summarise(total = sum(n)) %>% 
   arrange(desc(total))
+
+# ------------------------------------------------------------------------------
+
+most_freq_stat <- unique(c(qs_sname[[1]], qs_ename[[1]]))

@@ -30,7 +30,7 @@ Given the large sizes of the dataset, I will be using R via RStudio to Prepare, 
 
 ## Analyze
 
-#### Load Packages and Data
+#### Loading Packages and Data
 
 ```{r load packages, message=FALSE}
 library(tidyverse)
@@ -52,7 +52,7 @@ divvy_q4 <- read_csv("raw_csv/Divvy_Trips_2019_Q4.csv") %>%
   select(1, 2, 3, 6, 7, 8, 9, 10)
 ```
 
-The code above selects only the following columns:
+The code above selects the following columns:
 
 ```{r columns, echo=FALSE}
 colnames(divvy_q1)
@@ -60,7 +60,7 @@ colnames(divvy_q1)
 
 #### Renaming Column Names
 
-For consistency and uniqueness of the column names.
+For consistency and uniqueness of the column names I will rename the columns on each quarter data.
 
 ```{r clean columns}
 real_columns <- c("trip_id", "start_time", "end_time", "from_station_id", 
@@ -85,10 +85,10 @@ divvy_q4 <- add_column(divvy_q4, ride_length = divvy_q4$end_time - divvy_q4$star
                        day_of_week = wday(divvy_q4$end_time, week_start = 1))
 ```
 
-I added the following columns: 
+I added the following columns:
 
-- `ride_length` : elapsed time of the bike ride 
-- `day_of_week` : day of the week (1: Sunday - 7: Saturday)
+-   `ride_length` : elapsed time of the bike ride
+-   `day_of_week` : day of the week (1: Sunday - 7: Saturday)
 
 #### Filtering Data
 
@@ -123,9 +123,11 @@ divvy_q3$usertype <- str_replace_all(divvy_q3$usertype, replace_usertype_name)
 divvy_q4$usertype <- str_replace_all(divvy_q4$usertype, replace_usertype_name)
 ```
 
-Replacing the values `Subscriber` to `Member` and `Customer` to `Casual
+Replacing the values `Subscriber` to `Member` and `Customer` to `Casual`.
 
 ### Visualization
+
+#### Differentiating Average Ride Length of Casual Riders and Annual Members
 
 ```{r}
 q1_avg_rlength <- divvy_q1 %>% 
@@ -157,10 +159,20 @@ divvy_avg_rlength <- rbind(q1_avg_rlength, q2_avg_rlength, q3_avg_rlength, q4_av
 
 ggplot(divvy_avg_rlength, aes(x = quarter, y = avg_ride, col = usertype)) + 
   geom_point() + 
-  geom_line()
+  geom_line() +
+  labs(x = "Quarter", y = "Average Ride Lengths", col = "User Type", 
+       title = "Average Ride Lengths of Casual Riders and Annual Members")
 ```
 
-```{r message=FALSE}
+##### Findings
+
+-   Casual riders, on average, ride for about 66% longer than annual members.
+
+---
+
+#### Differentiating Average Ride Lengths of Users Across All Days of the Week
+
+```{r message=FALSE, fig.keep = 'none'}
 w1_avg_rlength <- divvy_q1 %>% 
   select(usertype, ride_length, day_of_week) %>% 
   group_by(usertype, day_of_week) %>% 
@@ -205,14 +217,36 @@ wmember_avg_rlength$day_of_week <- as.character(wmember_avg_rlength$day_of_week)
 
 ggplot(wcasual_avg_rlength, aes(x = day_of_week, y = avg_ride, fill = day_of_week)) + 
   geom_bar(position = "dodge", stat = "identity") + facet_wrap(~quarter) +
-  scale_y_continuous(limits = c(0, 50))
+  scale_y_continuous(limits = c(0, 50)) +
+  labs(title = "Average Ride Lengths of Casual Riders Across All Days of the Week", 
+       x = "Day of Week", y = "Average Ride Length", fill = "Day of Week",
+       subtitle = "(1 = Sunday - 7 = Saturday)")
 
 ggplot(wmember_avg_rlength, aes(x = day_of_week, y = avg_ride, fill = day_of_week)) + 
   geom_bar(position = "dodge", stat = "identity") + facet_wrap(~quarter) +
-  scale_y_continuous(limits = c(0, 50))
+  scale_y_continuous(limits = c(0, 50)) +
+  labs(title = "Average Ride Lengths of Annual Members Across All Days of the Week",
+       x = "Day of Week", y = "Average Ride Length", fill = "Day of Week",
+       subtitle = "(1 = Sunday - 7 = Saturday)")
 ```
 
-```{r message=FALSE}
+```{r echo=FALSE, fig.align="default", fig.show="hold", out.width="50%"}
+
+knitr::include_graphics("casual_rider_avgLength.png")
+
+knitr::include_graphics("member_rider_avgLength.png")
+
+```
+
+##### Findings
+
+-   On all days of the week, the average ride length of casual riders is significantly longer than that of annual members.
+
+---
+
+#### Differentiating Ride Trips of Users Across All Days of the Week
+
+```{r message=FALSE, fig.keep = 'none'}
 rcounts_q1 <- divvy_q1 %>% 
   count(usertype, day_of_week)
 
@@ -252,12 +286,35 @@ rcounts_member$day_of_week <- as.character(rcounts_member$day_of_week)
 
 ggplot(rcounts_casual, aes(x = day_of_week, y = ride_counts, fill = day_of_week)) + 
   geom_bar(position = "dodge", stat = "identity") + facet_wrap(~quarter) +
-  scale_y_continuous(limits = c(0, 200000))
+  scale_y_continuous(limits = c(0, 200000)) +
+  labs(title = "Ride Trips of Casual Riders Across All Days of the Week",
+      x = "Day of Week", y = "Ride Counts", fill = "Day of Week",
+      subtitle = "(1 = Sunday - 7 = Saturday)")
 
 ggplot(rcounts_member, aes(x = day_of_week, y = ride_counts, fill = day_of_week)) + 
   geom_bar(position = "dodge", stat = "identity") + facet_wrap(~quarter) +
-  scale_y_continuous(limits = c(0, 200000))
+  scale_y_continuous(limits = c(0, 200000)) +
+  labs(title = "Ride Trips of Annual Members Across All Days of the Week",
+    x = "Day of Week", y = "Ride Counts", fill = "Day of Week",
+    subtitle = "(1 = Sunday - 7 = Saturday)")
 ```
+
+```{r echo=FALSE, fig.align="default", fig.show="hold", out.width="50%"}
+
+knitr::include_graphics("rtrips_casual.png")
+
+knitr::include_graphics("rtrips_member.png")
+
+```
+
+##### Findings
+
+-   On Casual rider, there were relatively few bike trips during the first and fourth quarters.
+-   Throughout the entire quarter and on all days of the week, the number of bike trips taken by annual members exceeds that of casual riders.
+
+---
+
+#### Most Frequently Visited Start Station
 
 ```{r}
 most_q1_sname <- divvy_q1 %>% count(from_station_name, sort = TRUE)
@@ -269,7 +326,11 @@ qs_sname <- rbind(most_q1_sname[1:3,], most_q2_sname[1:3,], most_q3_sname[1:3,],
   group_by(from_station_name) %>% 
   summarise(total = sum(n)) %>% 
   arrange(desc(total))
+
+qs_sname
 ```
+
+#### Most Frequently Visited End Station
 
 ```{r}
 most_q1_ename <- divvy_q1 %>% count(to_station_name, sort = TRUE)
@@ -281,5 +342,20 @@ qs_ename <- rbind(most_q1_ename[1:3,], most_q2_ename[1:3,], most_q3_ename[1:3,],
   group_by(to_station_name) %>% 
   summarise(total = sum(n)) %>% 
   arrange(desc(total))
+
+qs_ename
 ```
 
+---
+
+## Conclusion
+
+In this analysis, the data is grouped into four quarters. And to ensure that the data is reliable, it is filtered out for rides with a length greater than 60 seconds but less than 24 hours.
+
+When analyzing the data, it is found that casual riders tend to ride for about 66% longer than annual members. On all days of the week, the average ride length of casual riders is significantly longer than that of annual members. However, there were relatively few bike trips taken by casual riders during the first and fourth quarters. In contrast, throughout the entire quarter and on all days of the week, the number of bike trips taken by annual members exceeds that of casual riders.
+
+## Recommendations
+
+- A promo that can save casual riders more for riding longer
+- They should put some kind of promotion in the top 6 most visited bike station
+- Q2 to Q3 should be the date where there is more promotion because Casual Riders rides more by that month.
